@@ -23,12 +23,18 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 
+
+// able to see swagger UI at <url>:port/docs
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// cors will be used to enable cross origin request
 app.use(cors());
 
-// Add a valid subscription key and endpoint to your environment variables.
+// Valid subscription key and endpoint.
 let subscriptionKey = "7ab55b99d2b84ec39b5f73b975167d43";
 let endpoint = "hhttps://si-facedetection.cognitiveservices.azure.com//face/v1.0/detect";
 
