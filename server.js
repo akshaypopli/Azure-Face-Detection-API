@@ -58,6 +58,8 @@ let endpoint = "hhttps://si-facedetection.cognitiveservices.azure.com//face/v1.0
  *      responses:
  *          200:
  *              description: Successfully detects the face and provide a array of object containing the coordinates of faces detected in image.
+ *          400:
+ *              description: Bad Request
  *          500:
  *              description: Internal server error
  *      parameters:
@@ -70,7 +72,15 @@ let endpoint = "hhttps://si-facedetection.cognitiveservices.azure.com//face/v1.0
  *
  */
 app.post("/detectface", async (req, res, next) => {
-    let imageUrl=req.body.imageUrl;
+    let imageUrl="";
+    if(!req.body.imageUrl){
+        return res.status(400).json({
+            message : "Bad Request"
+        });
+
+    }else {
+        imageUrl= req.body.imageUrl
+    }
 
     console.log(imageUrl);
     let result = axios({
@@ -96,7 +106,7 @@ app.post("/detectface", async (req, res, next) => {
         }
     }).catch(function (error) {
         console.log(error)
-        res.status(500).json({
+        res.status(400).json({
             error
         })
     });
@@ -122,6 +132,8 @@ app.post("/detectface", async (req, res, next) => {
  *      responses:
  *          200:
  *              description: Successfully detect the face and provide a array of object containing the coordinates of features (ex. nose, mouth, eye, eyebrow etc) of faces detected in image.
+ *          400:
+ *              description: Bad Request
  *          500:
  *              description: Internal server error
  *      parameters:
@@ -134,7 +146,14 @@ app.post("/detectface", async (req, res, next) => {
  *
  */
 app.post("/detectfacelandmarks", async (req, res, next) => {
-    let imageUrl=req.body.imageUrl;
+    let imageUrl="";
+    if(!req.body.imageUrl){
+        return res.status(400).json({
+            message : "Bad Request"
+        })
+    }else {
+        imageUrl= req.body.imageUrl
+    }
 
     console.log(imageUrl);
     let result = axios({
@@ -186,6 +205,8 @@ app.post("/detectfacelandmarks", async (req, res, next) => {
  *      responses:
  *          200:
  *              description: Successfully detects the faces and provide a array of object containing the emotions present on faces in the image.
+ *          400:
+ *              description: Bad Request
  *          500:
  *              description: Internal server error
  *      parameters:
@@ -198,7 +219,14 @@ app.post("/detectfacelandmarks", async (req, res, next) => {
  *
  */
 app.post("/detectfaceemotions", async (req, res, next) => {
-    let imageUrl=req.body.imageUrl;
+    let imageUrl="";
+    if(!req.body.imageUrl){
+        return res.status(400).json({
+            message : "Bad Request"
+        })
+    }else {
+        imageUrl= req.body.imageUrl
+    }
 
     console.log(imageUrl);
     let result = axios({
@@ -255,6 +283,8 @@ app.post("/detectfaceemotions", async (req, res, next) => {
  *      responses:
  *          200:
  *              description: Successfully detect the faces and provide an object containing information that two faces are Similar or not.
+ *          400:
+ *              description: Bad Request
  *          500:
  *              description: Internal server error
  *      parameters:
@@ -268,8 +298,16 @@ app.post("/detectfaceemotions", async (req, res, next) => {
  */
 
 app.post("/findsimilar", async (req, res, next) => {
-    let imageUrl1 = req.body.imageUrl1;
-    let imageUrl2 = req.body.imageUrl2;
+    let imageUrl1 = "";
+    let imageUrl2 = "";
+    if(!req.body.imageUrl1 || !req.body.imageUrl2){
+        return res.status(400).json({
+            message : "Bad Request"
+        })
+    }else {
+        imageUrl1 = req.body.imageUrl1;
+        imageUrl2 =  req.body.imageUrl2
+    }
 
     let f_id1 = "";
     let f_id2 = "";
