@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const axios = require('axios');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-const PORT = 4000;
+const PORT = 3000;
 const app = express();
 
 const options = {
@@ -15,7 +15,7 @@ const options = {
             version: '1.0.0',
             description: 'API provides information about face from a provided image'
         },
-        host: 'localhost:4000',
+        host: 'localhost:3000',
         basePath: '/'
     },
     apis: ['./server.js']
@@ -46,6 +46,7 @@ let endpoint = "hhttps://si-facedetection.cognitiveservices.azure.com//face/v1.0
  *     properties:
  *       imageUrl:
  *         type: string
+ *         description: URL of image, should be received from request
  */
 /**
  * @swagger
@@ -69,7 +70,8 @@ let endpoint = "hhttps://si-facedetection.cognitiveservices.azure.com//face/v1.0
  *
  */
 app.post("/detectface", async (req, res, next) => {
-    let imageUrl = req.body.imageUrl;
+    let imageUrl=req.body.imageUrl;
+
     console.log(imageUrl);
     let result = axios({
         method: 'post',
@@ -101,13 +103,14 @@ app.post("/detectface", async (req, res, next) => {
 });
 
 
-/**
+ /**
  * @swagger
  * definitions:
- *   Detect landmarks of faces in an image:
+ *   Detect landmarks in faces in an image:
  *     properties:
  *       imageUrl:
  *         type: string
+ *         description: URL of image, should be received from request
  */
 /**
  * @swagger
@@ -131,7 +134,8 @@ app.post("/detectface", async (req, res, next) => {
  *
  */
 app.post("/detectfacelandmarks", async (req, res, next) => {
-    let imageUrl = req.body.imageUrl;
+    let imageUrl=req.body.imageUrl;
+
     console.log(imageUrl);
     let result = axios({
         method: 'post',
@@ -166,10 +170,11 @@ app.post("/detectfacelandmarks", async (req, res, next) => {
 /**
  * @swagger
  * definitions:
- *   Detect emotion of faces in an image:
+ *   Detect emotions of faces in an image:
  *     properties:
  *       imageUrl:
  *         type: string
+ *         description: URL of image, should be received from request
  */
 /**
  * @swagger
@@ -193,7 +198,8 @@ app.post("/detectfacelandmarks", async (req, res, next) => {
  *
  */
 app.post("/detectfaceemotions", async (req, res, next) => {
-    let imageUrl = req.body.imageUrl;
+    let imageUrl=req.body.imageUrl;
+
     console.log(imageUrl);
     let result = axios({
         method: 'post',
@@ -230,12 +236,14 @@ app.post("/detectfaceemotions", async (req, res, next) => {
 /**
  * @swagger
  * definitions:
- *   Detect Similarities between faces in two image:
+ *   Detect similarity of faces in two images:
  *     properties:
  *       imageUrl1:
  *         type: string
+ *         description: URL of image1, which needs to be compare with image2
  *       imageUrl2:
  *         type: string
+ *         description: URL of image2, which needs to be compare with image1
  */
 /**
  * @swagger
@@ -262,6 +270,7 @@ app.post("/detectfaceemotions", async (req, res, next) => {
 app.post("/findsimilar", async (req, res, next) => {
     let imageUrl1 = req.body.imageUrl1;
     let imageUrl2 = req.body.imageUrl2;
+
     let f_id1 = "";
     let f_id2 = "";
     let azureEndpont = "https://eastus.api.cognitive.microsoft.com/face/v1.0/verify";
